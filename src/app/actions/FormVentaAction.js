@@ -3,6 +3,7 @@ import {loadSourceUnits , removeSourceUnits} from './sourceAction';
 import {LoadDataOwnerLabel} from './FormPropietarioAction';
 import {loadAuto} from './autoCompleteAction';
 
+
 export function insertUnits(valor) {
     return {
         type:"INSERT_UNITS_SALES",
@@ -39,21 +40,21 @@ export function insertCountPayment(valor) {
         value:valor
     }
 }
-export function insertTypeMoney(valor) {
+export function insertTypeMoneyCuota(valor) {
     return {
         type:"INSERT_TYPE_MONEY_SALES",
         value:valor
     }
 }
-export function insertCost(valor) {
+export function insertCostCouta(valor) {
     return {
         type:"INSERT_COST_SALES",
         value:valor
     }
 }
-export function insertTypePayment(valor) {
+export function insertTypePaymentAde(valor) {
     return {
-        type:"INSERT_TYPE_PAYMENT_SALES",
+        type:"INSERT_TYPE_PAYMENT_ADELANTO_SALES",
         value:valor
     }
 }
@@ -69,10 +70,41 @@ export function insertMjsErr(valor) {
         value:valor
     }
 }
-export function clearForm() {
+export function clearForm(valor) {
+    return[{
+        type:"CLEAR_FORM_SALES",
+        value:valor
+        },
+        loadAuto({id:"idUnidad",state:{}})
+    ]
+}
+export function insertCostoAdelanto(valor) {
     return{
-        type:"CLEAR_FORM_SALES"
+        type:"INSERT_COST_ADELANTO_SALES",
+        value:valor
     }
+}
+
+export function insertTipoMonedaAdelanto(valor) {
+    return{
+        type:"INSERT_TYPE_MONEY_ADELANTO_SALES",
+        value:valor
+    }
+}
+export function insertTypeVenta(valor) {
+    return{
+        type:"INSERT_TYPE_VENTA_SALES",
+        value:valor
+    }
+}
+export function insertUnitsReserve(valor) {
+    return[
+        loadAuto({id:"idUnidad",state:{}}),
+        {
+        type:"INSERT_UNITS_RESERVE_SALES",
+        value:valor
+        },
+        insertUnits(valor ? valor.unidad : null)]
 }
 export function sendForm(form,idUsuario,idForm) {
     return function(dispatch) {
@@ -80,13 +112,15 @@ export function sendForm(form,idUsuario,idForm) {
             {
                 idUnidad:form.idUnidad.value,
                 idPropietario:form.idPropietario,
-                idEstadoVenta:form.idEstadoVenta.value,
                 Fecha:form.Fecha,
-                idCondicionPago:form.idCondicionPago.value,
+                importeAdelanto:form.importeAdelanto,
+                tipoMonedaAdelanto:form.tipoMonedaAdelanto.value,
+                tipoPagoAdelanto:form.tipoPagoAdelanto.value,
                 cantidadPago:form.cantidadPago,
-                idTipoMoneda:form.idTipoMoneda.value,
-                importe:form.importe,
-                TipoPago:form.TipoPago.value,
+                idTipoMonedaCuota: form.idTipoMonedaCuota ? form.idTipoMonedaCuota.value : null,
+                importeCuota:form.importeCuota,
+                TipoVenta:form.TipoVenta.value,
+                Reserva:form.selectUnidadReserva.value,
                 idUsuario:idUsuario
             })
             .then((result)=>{

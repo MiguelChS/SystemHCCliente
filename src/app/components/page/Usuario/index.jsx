@@ -10,7 +10,8 @@ import * as lib from '../../../lib/index';
 @connect((store)=>{
     return {
         store:store.FormUsuario,
-        source:store.Source
+        source:store.Source,
+        idUsuario:store.Layout.DataUser.id
     }
 })
 export default class Index extends React.Component{
@@ -19,7 +20,7 @@ export default class Index extends React.Component{
         if(!this.formComplete()) return;
         this.props.dispatch([
             action.changeStateSendForm(true),
-            action.sendUsuario(this.props.store)
+            action.sendUsuario(this.props.store,this.props.idUsuario)
         ]);
     }
     formComplete(){
@@ -101,6 +102,27 @@ export default class Index extends React.Component{
                                     placeHolder="n° Documento"
                                     returnValue={(value)=>{
                                         this.props.dispatch(action.insertNumberDocument(value))
+                                    }}
+                                />
+                                <Input
+                                    value={this.props.store.importe}
+                                    required={true}
+                                    label="Importe"
+                                    placeHolder="Importe"
+                                    returnValue={(value)=>{
+                                        if(value.length > 0 && !lib.OnlyNumber(value))return;
+                                        this.props.dispatch(action.insertImporte(value))
+                                    }}
+                                />
+                                <Select
+                                    label="Tipo Moneda"
+                                    id="idTipoMoneda"
+                                    col={{label:2,input:10}}
+                                    dataSource={this.props.source.TypeMoney}
+                                    default={this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"]:null}
+                                    required={true}
+                                    returnSelect={(value)=>{
+                                        this.props.dispatch(action.insertTypeMoney(value))
                                     }}
                                 />
                                 <div className="hr-line-dashed"></div>

@@ -27,13 +27,17 @@ export default class Select extends React.Component{
         if(this.props.required && value == -1 ){
             classRequire = "form-control require-inv";
         }
+        let disabled = this.props.hasOwnProperty("disabled") ? this.props.disabled : false;
         return(
             <FormGroup controlId={this.props.id}>
                 <Col componentClass={ControlLabel} xs={12} sm={( typeof this.props.col == 'undefined' ? 2 : this.props.col.label)}>
                     {this.props.label}
                 </Col>
                 <Col xs={12} sm={( typeof this.props.col == 'undefined' ? 10 : this.props.col.input)}>
-                    <select className={classRequire} onChange={this.clickSelect.bind(this)} value={this.searchDefault(this.props.default)}>
+                    <select className={classRequire}
+                            disabled={disabled}
+                            onChange={this.clickSelect.bind(this)}
+                            value={this.searchDefault(this.props.default)}>
                         <option value="-1">Seleccione</option>
                         {this.props.dataSource.map((obj,index)=>{
                             return <option key={index} value={index} >{obj.label}</option>

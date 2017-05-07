@@ -28,7 +28,7 @@ export default class Index extends React.Component{
                         dispatch={this.props.dispatch}
                         store={this.props.FormOwner}
                         btnSearch={()=>{
-                            this.props.dispatch(searchOwner(this.props.FormOwner.numberDocumentSerach,insertSocio,true))
+                            this.props.dispatch(searchOwner(this.props.FormOwner.numberDocumentSerach,insertSocio,1))
                         }}
                         onChangeNumDoc={(text)=>{
                             this.props.dispatch(insertNumberDocumentSearch(text));

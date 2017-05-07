@@ -15,6 +15,8 @@ import modal from './ModalReducer';
 import formPropietario from './FormPropietarioReducer';
 import dataLabelPersonal from './DatosPersonalreducer';
 import formAporte from './FormAporteReducer';
+import formEgreso from './FormEgresoReducer';
+import formPago from './FormPagoReducer';
 
 export default combineReducers({
     Login:login,
@@ -28,5 +30,7 @@ export default combineReducers({
     Modal:modal,
     FormOwner:formPropietario,
     DataLabelPersonal:dataLabelPersonal,
-    FormAporte:formAporte
+    FormAporte:formAporte,
+    FormEgreso:formEgreso,
+    FormPago:formPago
 })

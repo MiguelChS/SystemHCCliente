@@ -8,21 +8,32 @@ import moment from 'moment';
 let init = {
     idUnidad:null,
     idPropietario:null,
-    idEstadoVenta:null,
     Fecha:moment().format("YYYY-MM-DD"),
-    idCondicionPago:null,
+    //adelanto
+    importeAdelanto:null,
+    tipoMonedaAdelanto:null,
+    tipoPagoAdelanto:null,
+    //cuatoas
     cantidadPago:null,
-    idTipoMoneda:null,
-    importe:null,
-    TipoPago:null,
+    idTipoMonedaCuota:null,
+    importeCuota:null,
+    //estado de ventas
     sendForm:false,
-    errMjs:""
+    errMjs:"",
+    TipoVenta:null,
+    selectUnidadReserva:null
 };
 
 function reducer(state=init,action) {
     switch (action.type){
         case "INSERT_UNITS_SALES":{
             return{...state,idUnidad:action.value}
+        }
+        case "INSERT_TYPE_VENTA_SALES":{
+            return{...state,TipoVenta:action.value}
+        }
+        case "INSERT_UNITS_RESERVE_SALES":{
+            return{...state,selectUnidadReserva:action.value}
         }
         case "INSERT_OWNER_SALES":{
             return{...state,idPropietario:action.value}
@@ -40,16 +51,26 @@ function reducer(state=init,action) {
             return{...state,cantidadPago:action.value}
         }
         case "INSERT_TYPE_MONEY_SALES":{
-            return{...state,idTipoMoneda:action.value}
+            return{...state,idTipoMonedaCuota:action.value}
+        }
+        case "INSERT_TYPE_MONEY_ADELANTO_SALES":{
+            return{...state,tipoMonedaAdelanto:action.value}
         }
         case "INSERT_COST_SALES":{
-            return{...state,importe:action.value}
+            return{...state,importeCuota:action.value}
         }
-        case "INSERT_TYPE_PAYMENT_SALES":{
-            return{...state,TipoPago:action.value}
+        case "INSERT_COST_ADELANTO_SALES":{
+            return{...state,importeAdelanto:action.value}
+        }
+        case "INSERT_TYPE_PAYMENT_ADELANTO_SALES":{
+            return{...state,tipoPagoAdelanto:action.value}
         }
         case "CLEAR_FORM_SALES":{
-            return{...state,...init}
+            if(action.value){
+                return{...state,...init,...{idPropietario:state.idPropietario}}
+            }else{
+                return{...state,...init}
+            }
         }
         case "INSERT_ERR_MJS_SALES":{
             return{...state,errMjs:action.value}

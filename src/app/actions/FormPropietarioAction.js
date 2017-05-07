@@ -5,6 +5,8 @@
  * Created by mc185249 on 4/23/2017.
  */
 import request from '../Request/Request'
+import {insertUnitsReserve} from './FormVentaAction';
+import {insertVenta} from './FormPagoAction';
 
 export function insertName(valor) {
     return {
@@ -99,6 +101,8 @@ export function searchOwner(numberDocument,insertResutl,socio) {
                 dispatch([
                     insertResutl(Owner ? Owner.id : Owner),
                     LoadDataOwnerLabel(Owner),
+                    insertUnitsReserve(null),
+                    insertVenta(null),
                     changeStateSendSearch(false),
                     insertMjsErrSearch(Owner ? "": "no se encontro coincidencia")
                 ]);
@@ -107,6 +111,8 @@ export function searchOwner(numberDocument,insertResutl,socio) {
                 dispatch([
                     insertMjsErrSearch(err.response ? err.response.data.err : "no hay conexion"),
                     insertResutl(null),
+                    insertUnitsReserve(null),
+                    insertVenta(null),
                     LoadDataOwnerLabel(null),
                     changeStateSendSearch(false)
                 ])

@@ -7,6 +7,8 @@ let init = {
     telefono:null,
     numDocumento:null,
     idTipoDocumento:null,
+    idTipoMoneda:null,
+    importe:null,
     mail:null,
     sendForm:false,
     errMjs:""
@@ -31,6 +33,12 @@ function reducer(state=init,action) {
         }
         case "INSERT_MAIL_FORM_USER":{
             return{...state,mail:action.value}
+        }
+        case "INSERT_TYPE_MONEY_USER":{
+            return{...state,idTipoMoneda:action.value}
+        }
+        case "INSERT_IMPORTE_USER":{
+            return{...state,importe:action.value}
         }
         case "CLEAR_FORM_USER":{
             return{...state,...init}

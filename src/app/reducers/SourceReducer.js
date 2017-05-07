@@ -8,7 +8,10 @@ let init = {
     StateSale:[],
     TypeMoney:[],
     TypePayment:[],
-    Units:[]
+    Units:[],
+    typeContribute:[],
+    TypeCostParent:[],
+    TypeCostChildren:[]
 };
 
 function reducer(state=init,action) {

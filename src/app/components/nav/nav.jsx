@@ -106,10 +106,20 @@ export default (props)=>{
                                            }}
                                         >Venta</a>
                                     </li>
+                                    <li>
+                                        <a href="JavaScript:void(0)"
+                                           onClick={()=>{
+                                               props.dispatch(page.pagePago())
+                                           }}
+                                        >Pago</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="JavaScript:void(0)">Egresos</a>
+                                <a href="JavaScript:void(0)"
+                                   onClick={()=>{
+                                       props.dispatch(page.pageEgreso())
+                                   }}>Egresos</a>
                             </li>
                         </ul>
                     </li>

@@ -7,7 +7,8 @@ let init={
     phone:"",
     numberDocument:"",
     typeDocument:"",
-    mail:""
+    mail:"",
+    unidades:[]
 };
 
 function reducer(state=init,action) {

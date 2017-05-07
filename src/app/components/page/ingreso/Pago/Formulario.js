@@ -1,45 +1,58 @@
+/**
+ * Created by mc185249 on 5/6/2017.
+ */
 import React from 'react';
 import {connect} from 'react-redux';
-import { Select, Input ,InputFecha } from '../../componentFormulario/index.jsx';
-import * as action from '../../../../actions/FormAporteAction';
+import * as action from '../../../../actions/FormPagoAction';
 import * as lib from '../../../../lib/index';
+import { Select, Input ,InputFecha } from '../../componentFormulario/index.jsx';
 
 @connect((store)=>{
-    return {
-        store:store.FormAporte,
+    return{
+        store:store.FormPago,
         source:store.Source,
+        Reserva:store.DataLabelPersonal.unidades,
         idUsuario:store.Layout.DataUser.id
     }
 })
-export default class Index extends React.Component{
+export default class Formulario extends React.Component{
+
     sendForm(){
         if(!this.formComplete()) return;
         this.props.dispatch([
             action.changeStateSendForm(true),
-            action.sendForm(this.props.store,this.props.idUsuario,'idUnidad')
+            action.sendForm(this.props.store,this.props.idUsuario)
         ]);
     }
 
     formComplete(){
         let form = this.props.store;
-        if(!form.idSocio){
-            this.props.dispatch(action.insertMjsErr("Seleccione un propietario"))
-        }else{
-            this.props.dispatch(action.insertMjsErr(""))
-        }
-        if(form.idSocio && form.idTipoMoneda && form.importe && form.idTipoAporte && form.Fecha){
+        if(form.Fecha &&
+            form.idTipoMoneda &&
+            form.idFormaPago &&
+            form.importe &&
+            form.idVenta){
             return true;
         }
         return false;
     }
 
+    Unidades(){
+        return this.props.Reserva.map((obj)=>{
+            return {
+                label:`${obj.unidad.label}`,
+                value:obj.reserva,
+                unidad:obj.unidad
+            }
+        })
+    }
+
     render(){
         return(
-            <div className="row">
-                <div className="col-xs-12">
+                <div className="col-xs-12 col-md-8">
                     <div className="ibox float-e-margins">
                         <div className="ibox-title">
-                            <h5>Aporte de Socio <small> SystemHC+ </small></h5>
+                            <h5>Pago Unidad<small> SystemHC+ </small></h5>
                         </div>
                         <div className="ibox-content">
                             <form className="form-horizontal" onSubmit={(event)=>{
@@ -50,6 +63,17 @@ export default class Index extends React.Component{
                                     <p className="mjsErr">{this.props.store.errMjs}</p>
                                 </div>
                                 <Select
+                                    label="Unidad"
+                                    id="idTipoMoney"
+                                    col={{label:2,input:10}}
+                                    dataSource={this.Unidades()}
+                                    default={this.props.store.idVenta ? this.props.store.idVenta["value"]:null}
+                                    required={true}
+                                    returnSelect={(value)=>{
+                                        this.props.dispatch(action.insertVenta(value))
+                                    }}
+                                />
+                                <Select
                                     label="Tipo Mondeda"
                                     id="idTipoMoney"
                                     col={{label:2,input:10}}
@@ -57,18 +81,18 @@ export default class Index extends React.Component{
                                     default={this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"]:null}
                                     required={true}
                                     returnSelect={(value)=>{
-                                        this.props.dispatch(action.insertTypeMoney(value))
+                                        this.props.dispatch(action.insertMoney(value))
                                     }}
                                 />
                                 <Select
-                                    label="Tipo Aporte"
+                                    label="Forma de pago"
                                     id="idAporte"
                                     col={{label:2,input:10}}
-                                    dataSource={this.props.source.typeContribute}
-                                    default={this.props.store.idTipoAporte ? this.props.store.idTipoAporte["value"]:null}
+                                    dataSource={this.props.source.TypePayment}
+                                    default={this.props.store.idFormaPago ? this.props.store.idFormaPago["value"]:null}
                                     required={true}
                                     returnSelect={(value)=>{
-                                        this.props.dispatch(action.insertTypeAporte(value))
+                                        this.props.dispatch(action.insertForma(value))
                                     }}
                                 />
                                 <InputFecha label="Fecha"
@@ -103,7 +127,6 @@ export default class Index extends React.Component{
                         </div>
                     </div>
                 </div>
-            </div>
         )
     }
 }

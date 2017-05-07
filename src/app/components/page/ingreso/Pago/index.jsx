@@ -1,20 +1,15 @@
 import React from 'react';
-import FormVenta from './Formulario.jsx';
 import DetalleUnidad from '../componentCompartido/DetalleUnidad';
-import DetalleVenta from '../componentCompartido/DetalleVenta';
 import VerificarProp from '../componentCompartido/VerificarPropietario.jsx'
 import DatosProp from '../componentCompartido/DatosPropietario.jsx';
+import Formulario from './Formulario';
 import { connect} from 'react-redux';
-import {searchUnits,insertOwner} from '../../../../actions/FormVentaAction';
 import { insertNumberDocumentSearch,searchOwner,LoadDataOwnerLabel,clearForm } from '../../../../actions/FormPropietarioAction';
-import FormProp from './FormPropietario.jsx';
-import { addModal } from '../../../../actions/modalAction';
 @connect((store)=>{
     return {
         DataPersonal:store.DataLabelPersonal,
         FormOwner:store.FormOwner,
-        Units:store.Source.Units,
-        store:store.FormSale
+        store:store.FormPago
     }
 })
 export default class Index extends React.Component{
@@ -25,9 +20,6 @@ export default class Index extends React.Component{
             clearForm()
         ])
     }
-    componentDidMount(){
-        this.props.dispatch(searchUnits())
-    }
 
     render(){
         return(
@@ -37,16 +29,10 @@ export default class Index extends React.Component{
                         dispatch={this.props.dispatch}
                         store={this.props.FormOwner}
                         btnSearch={()=>{
-                            this.props.dispatch(searchOwner(this.props.FormOwner.numberDocumentSerach,insertOwner,2))
+                            this.props.dispatch(searchOwner(this.props.FormOwner.numberDocumentSerach,()=>{},3))
                         }}
                         onChangeNumDoc={(text)=>{
                             this.props.dispatch(insertNumberDocumentSearch(text));
-                        }}
-                        onClickNewProp={()=>{
-                            this.props.dispatch(addModal({
-                                body:FormProp,
-                                data:null,
-                                size:"lg"}))
                         }}
                     />
                     <DatosProp
@@ -54,17 +40,12 @@ export default class Index extends React.Component{
                     />
                 </div>
                 <div className="row">
-                    <FormVenta/>
+                    <Formulario/>
                     <div className="col-xs-12 col-md-4">
                         <DetalleUnidad
-                            store={this.props.store.idUnidad}
-                        />
-                        <DetalleVenta
-                            store={this.props.store}
+                            store={this.props.store.idVenta ? this.props.store.idVenta.unidad : null}
                         />
                     </div>
-
-
                 </div>
             </div>
         )

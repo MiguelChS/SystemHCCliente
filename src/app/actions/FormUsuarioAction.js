@@ -44,7 +44,19 @@ export function changeStateSendForm(valor) {
         value:valor
     }
 }
-export function sendUsuario(form) {
+export function insertTypeMoney(valor) {
+    return {
+        type:"INSERT_TYPE_MONEY_USER",
+        value:valor
+    }
+}
+export function insertImporte(valor) {
+    return {
+        type:"INSERT_IMPORTE_USER",
+        value:valor
+    }
+}
+export function sendUsuario(form,idUsuario) {
     return function(dispatch) {
         request.post('http://localhost:3001/api/NewSocio',
             {
@@ -53,7 +65,10 @@ export function sendUsuario(form) {
                 phone:form.telefono,
                 numberDocument:form.numDocumento,
                 typeDocument:form.idTipoDocumento.value,
-                mail:form.mail
+                mail:form.mail,
+                typeMoney:form.idTipoMoneda.value,
+                importe:form.importe,
+                idUsuario:idUsuario
             })
             .then((result)=>{
                 dispatch([
