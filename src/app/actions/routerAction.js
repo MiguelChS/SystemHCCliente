@@ -9,6 +9,9 @@ import SalePage from '../components/page/ingreso/venta/index.jsx';
 import AportePage from '../components/page/ingreso/Aporte/index.jsx';
 import Egreso from '../components/page/Egreso/index.jsx';
 import Pago from '../components/page/ingreso/Pago/index.jsx';
+import Caja from '../components/page/Caja/index';
+import InicioProject from '../components/page/InicioProject/index';
+import CashFlow from '../components/page/CashFlow/index';
 
 export function pageUser() {
     return loadBodyContent(<UserPage/>)
@@ -27,4 +30,13 @@ export function pageEgreso() {
 }
 export function pagePago() {
     return loadBodyContent(<Pago/>)
+}
+export function pageCaja() {
+    return loadBodyContent(<Caja/>)
+}
+export function pageInicioProject() {
+    return loadBodyContent(<InicioProject/>)
+}
+export function pageCashFlow() {
+    return loadBodyContent(<CashFlow/>)
 }

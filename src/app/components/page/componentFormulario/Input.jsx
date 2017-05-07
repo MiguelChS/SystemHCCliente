@@ -14,6 +14,7 @@ export default class Input extends React.Component{
         if(this.props.required && value.length == 0){
             classRequire = "form-control require-inv";
         }
+        let disabled = this.props.hasOwnProperty("disabled") ? this.props.disabled : false;
         return(
             <FormGroup controlId={this.props.id}>
                 <Col componentClass={ControlLabel} xs={12} sm={this.props.col ? this.props.col.label : 2}>
@@ -22,6 +23,7 @@ export default class Input extends React.Component{
                 <Col xs={12} sm={this.props.col ? this.props.col.input : 10}>
                     <FormControl
                         bsClass={classRequire}
+                        disabled={disabled}
                         type="text"
                         placeholder={this.props.placeHolder}
                         value={value}

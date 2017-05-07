@@ -50,7 +50,12 @@ export function clearForm() {
         type:"CLEAR_FORM_APORTE"
     }
 }
-
+export function insertCambio(valor) {
+    return{
+        type:"INSERT_CAMBIO_DOLAR_APORTE",
+        value:valor
+    }
+}
 export function sendForm(form,idUsuario) {
     return function(dispatch) {
         request.post('http://localhost:3001/api/newAporte',

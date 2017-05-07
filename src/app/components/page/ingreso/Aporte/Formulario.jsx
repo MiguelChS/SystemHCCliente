@@ -34,6 +34,10 @@ export default class Index extends React.Component{
     }
 
     render(){
+        let disabledCambio = true;
+        if(this.props.store.idTipoMoneda && this.props.store.idTipoMoneda["value"] == "58fecf3f3b2ef968436b332c"){
+            disabledCambio = false;
+        }
         return(
             <div className="row">
                 <div className="col-xs-12">
@@ -57,7 +61,21 @@ export default class Index extends React.Component{
                                     default={this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"]:null}
                                     required={true}
                                     returnSelect={(value)=>{
-                                        this.props.dispatch(action.insertTypeMoney(value))
+                                        this.props.dispatch([
+                                            action.insertTypeMoney(value),
+                                            action.insertCambio("")
+                                        ])
+                                    }}
+                                />
+                                <Input
+                                    label="Cambio dolar"
+                                    placeHolder="Cambio dolar"
+                                    value={this.props.store.cambioDolar}
+                                    disabled={disabledCambio}
+                                    required={true}
+                                    returnValue={(value)=>{
+                                        if(value.length > 0 && !lib.OnlyNumber(value))return;
+                                        this.props.dispatch(action.insertCambio(value))
                                     }}
                                 />
                                 <Select

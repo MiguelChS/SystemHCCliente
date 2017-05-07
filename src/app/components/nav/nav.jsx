@@ -49,29 +49,43 @@ export default (props)=>{
                             </a>
                         </div>
                     </li>
+                    {(()=>{
+                        if(props.store.DataUser.admin){
+                           return[
+                               <li key={3}>
+                                   <a href="JavaScript:void(0)"
+                                      onClick={()=>{
+                                          props.dispatch(page.pageInicioProject())
+                                      }}
+                                   >
+                                       <i className="fa fa-play"/>
+                                       <span className="nav-label">Inicio Proyecto</span>
+                                   </a>
+                               </li>,
+                               <li key={1}>
+                                   <a href="JavaScript:void(0)"
+                                      onClick={()=>{
+                                          props.dispatch(page.pageUser())
+                                      }}
+                                   >
+                                       <i className="fa fa-user"/>
+                                       <span className="nav-label">Usuario</span>
+                                   </a>
+                               </li>,
+                               <li key={2}>
+                                   <a href="JavaScript:void(0)"
+                                      onClick={()=>{
+                                          props.dispatch(page.pageUnits())
+                                      }}
+                                   >
+                                       <i className="fa fa-building"/>
+                                       <span className="nav-label">Unidades</span>
+                                   </a>
+                               </li>
 
-                    <li>
-                        <a href="JavaScript:void(0)"
-                            onClick={(event)=>{
-                                Collapse(event);
-                            }}
-                        >
-                            <i className="fa fa-edit"/>
-                            <span className="nav-label">Dashboards</span>
-                            <span className="fa fa-plus floatRight"/>
-                        </a>
-                        <ul className="nav second-level collapse">
-                            <li>
-                                <a href="JavaScript:void(0)">Caja</a>
-                            </li>
-                            <li>
-                                <a href="JavaScript:void(0)">CashFlow</a>
-                            </li>
-                            <li>
-                                <a href="JavaScript:void(0)">Tablero de resultado</a>
-                            </li>
-                        </ul>
-                    </li>
+                           ]
+                        }
+                    })()}
                     <li>
                         <a href="JavaScript:void(0)"
                            onClick={(event)=>{
@@ -123,32 +137,34 @@ export default (props)=>{
                             </li>
                         </ul>
                     </li>
-                    {(()=>{
-                        if(props.store.DataUser.admin){
-                           return[
-                               <li key={1}>
-                                   <a href="JavaScript:void(0)"
-                                      onClick={()=>{
-                                          props.dispatch(page.pageUser())
-                                      }}
-                                   >
-                                       <i className="fa fa-user"/>
-                                       <span className="nav-label">Usuario</span>
-                                   </a>
-                               </li>,
-                               <li key={2}>
-                                   <a href="JavaScript:void(0)"
-                                      onClick={()=>{
-                                          props.dispatch(page.pageUnits())
-                                      }}
-                                   >
-                                       <i className="fa fa-building"/>
-                                       <span className="nav-label">Unidades</span>
-                                   </a>
-                               </li>
-                           ]
-                        }
-                    })()}
+                    <li>
+                        <a href="JavaScript:void(0)"
+                           onClick={(event)=>{
+                               Collapse(event);
+                           }}
+                        >
+                            <i className="fa fa-bar-chart"/>
+                            <span className="nav-label">Dashboards</span>
+                            <span className="fa fa-plus floatRight"/>
+                        </a>
+                        <ul className="nav second-level collapse">
+                            <li>
+                                <a href="JavaScript:void(0)"
+                                   onClick={()=>{
+                                       props.dispatch(page.pageCaja())
+                                   }}>Caja</a>
+                            </li>
+                            <li>
+                                <a href="JavaScript:void(0)"
+                                   onClick={()=>{
+                                       props.dispatch(page.pageCashFlow())
+                                   }}>CashFlow</a>
+                            </li>
+                            <li>
+                                <a href="JavaScript:void(0)">Tablero de resultado</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>

@@ -11,9 +11,14 @@ import  Main from './components/index.jsx';
 
 
 const app = document.getElementById('app');
+//cargando loa graficos
+window.google.charts.load('current', {'packages':['corechart','line','bar']});
+window.google.charts.setOnLoadCallback(()=>{
+    render(
+        <Provider store={store}>
+            <Main/>
+        </Provider>,
+        app);
+});
 
-render(
-    <Provider store={store}>
-        <Main/>
-    </Provider>,
-    app);
+
