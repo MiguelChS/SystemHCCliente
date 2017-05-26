@@ -37,10 +37,10 @@ let TablaResult = (props)=>{
                                     <button className="btn btn-xs btn-primary separarButton"
                                             disabled={props.request}
                                             onClick={()=>{
-                                                /*props.dispatch(addModal({
+                                                props.dispatch(addModal({
                                                 body:Formulario,
                                                 data:null,
-                                                size:"lg"}))*/
+                                                size:"lg"}))
                                             }}
                                             type="button">
                                         Nueva Persona
@@ -57,7 +57,6 @@ let TablaResult = (props)=>{
                                         <th>Telefono</th>
                                         <th>Mail</th>
                                         <th>Documento</th>
-                                        <th>Socio</th>
                                         <th>Cantidad de Compras</th>
                                         <th></th>
                                     </tr>
@@ -70,28 +69,15 @@ let TablaResult = (props)=>{
                                             <td>{obj.telefono}</td>
                                             <td>{obj.mail}</td>
                                             <td>{`${obj.tipoDocu} : ${obj.numeroDocumento}`}</td>
-                                            <td>{obj.socio ? "Si" : "No"}</td>
                                             <td>{obj.cantUnits}</td>
                                             <td>
                                                 <BtnTable
                                                     data={obj}
                                                     onClick={(form)=>{
-                                                        //props.dispatch(action.Editar(form,Formulario,props.source.typeOrientation))
+                                                        props.dispatch(action.Editar(form,Formulario,props.source.typeDocument))
                                                     }}
                                                     icono="fa-pencil"
                                                 />
-                                                {(()=>{
-                                                    if(obj.cantUnits) return null;
-                                                    return(
-                                                        <BtnTable
-                                                            data={obj}
-                                                            onClick={(form)=>{
-                                                                //props.dispatch(action.Delete(form._id))
-                                                            }}
-                                                            icono="fa-trash"
-                                                        />
-                                                    )
-                                                })()}
                                             </td>
                                         </tr>
                                     )

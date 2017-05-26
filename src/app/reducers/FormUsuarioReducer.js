@@ -2,16 +2,15 @@
  * Created by mc185249 on 4/23/2017.
  */
 let init = {
+    id:null,
     name:null,
     lastName:null,
     telefono:null,
     numDocumento:null,
     idTipoDocumento:null,
-    idTipoMoneda:null,
-    importe:null,
     mail:null,
-    sendForm:false,
-    errMjs:""
+    errMjs:"",
+    mjsSuccess:""
 };
 
 function reducer(state=init,action) {
@@ -34,20 +33,17 @@ function reducer(state=init,action) {
         case "INSERT_MAIL_FORM_USER":{
             return{...state,mail:action.value}
         }
-        case "INSERT_TYPE_MONEY_USER":{
-            return{...state,idTipoMoneda:action.value}
-        }
-        case "INSERT_IMPORTE_USER":{
-            return{...state,importe:action.value}
-        }
         case "CLEAR_FORM_USER":{
             return{...state,...init}
+        }
+        case "PRE_CARGAR_FORM_USER":{
+            return{...state,...action.value}
         }
         case "INSERT_ERR_MJS_USER":{
             return{...state,errMjs:action.value}
         }
-        case "CHANGE_STATE_SEND_USER":{
-            return{...state,sendForm:action.value}
+        case "INSERT_SUCCESS_MJS_USER":{
+            return{...state,mjsSuccess:action.value}
         }
         default:{
             return{...state}

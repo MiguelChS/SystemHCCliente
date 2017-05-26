@@ -2,6 +2,8 @@
  * Created by mc185249 on 4/23/2017.
  */
 import request from '../Request/Request'
+import {changeRequest} from './LayoutAction';
+import {ActulizarResult} from './FiltroPersonAction';
 export function insertName(valor) {
     return {
         type:"INSERT_NAME_FORM_USER",
@@ -38,55 +40,66 @@ export function insertMail(valor) {
         value:valor
     }
 }
-export function changeStateSendForm(valor) {
+
+export function insertSUCCESS(valor) {
     return {
-        type:"CHANGE_STATE_SEND_USER",
+        type:"INSERT_SUCCESS_MJS_USER",
         value:valor
     }
 }
-export function insertTypeMoney(valor) {
+
+export function insertERR(valor) {
     return {
-        type:"INSERT_TYPE_MONEY_USER",
+        type:"INSERT_ERR_MJS_USER",
         value:valor
     }
 }
-export function insertImporte(valor) {
+
+export function clearForm() {
     return {
-        type:"INSERT_IMPORTE_USER",
+        type:"CLEAR_FORM_USER"
+    }
+}
+export function preCargaPerson(valor) {
+    return {
+        type:"PRE_CARGAR_FORM_USER",
         value:valor
     }
 }
+
 export function sendUsuario(form,idUsuario) {
+    return [
+        changeRequest(true),
+        enviarUsuario(form,idUsuario)
+    ]
+}
+
+function enviarUsuario(form,idUsuario) {
     return function(dispatch) {
         request.post('http://localhost:3001/api/NewSocio',
             {
+                id:form.id,
                 name:form.name,
                 lastName:form.lastName,
                 phone:form.telefono,
                 numberDocument:form.numDocumento,
                 typeDocument:form.idTipoDocumento.value,
                 mail:form.mail,
-                typeMoney:form.idTipoMoneda.value,
-                importe:form.importe,
                 idUsuario:idUsuario
             })
             .then((result)=>{
                 dispatch([
-                    {type:"CLEAR_FORM_USER"},
-                    {
-                        type:"INSERT_ERR_MJS_USER",
-                        value:""
-                    },
-                    changeStateSendForm(false)
+                    (form.id ? null : clearForm()),
+                    insertERR(""),
+                    insertSUCCESS("Se cargo correctamente"),
+                    changeRequest(false),
+                    (form.id ? ActulizarResult(form) : null)
                 ]);
             })
             .catch((err)=>{
                 dispatch([
-                    {
-                        type:"INSERT_ERR_MJS_USER",
-                        value:err.response ? err.response.data.err : "no hay conexion"
-                    },
-                    changeStateSendForm(false)
+                    insertERR(err.response ? err.response.data.err : "no hay conexion"),
+                    changeRequest(false)
                 ])
             });
     }

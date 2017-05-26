@@ -17,7 +17,7 @@ let Filtro = (props)=>{
                     <div className="ibox-content">
                         <form className="form-horizontal" onSubmit={(event)=>{
                             event.preventDefault();
-                            //props.dispatch(action.filtrar())
+                            props.dispatch(action.filtrar())
                         }}>
                             <div className="row">
                                 <div className="col-xs-12 col-md-6">
@@ -37,20 +37,6 @@ let Filtro = (props)=>{
                                         placeHolder="Numero de documento"
                                         returnValue={(value)=>{
                                             props.dispatch(action.insertNumberDocument(value))
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-xs-12 col-md-6">
-                                    <Select
-                                        label="Socio"
-                                        id="idSocio"
-                                        col={{label:2,input:10}}
-                                        dataSource={[{label:"Socio",value:true},{label:"No Socio",value:false}]}
-                                        default={props.store.Socio}
-                                        returnSelect={(value)=>{
-                                            props.dispatch(action.insertSocio(value))
                                         }}
                                     />
                                 </div>

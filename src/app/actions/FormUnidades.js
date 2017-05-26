@@ -102,7 +102,8 @@ function sendForm(form) {
                     (form.id ? null : clearForm()),
                     changeRequest(false),
                     insertMjsSuccess("Se cargo correctamente"),
-                    (form.id ? ActulizarResult(form) : null)
+                    (form.id ? ActulizarResult(form) : null),
+                    insertMjsErr("")
                 ]);
             })
             .catch((err)=>{

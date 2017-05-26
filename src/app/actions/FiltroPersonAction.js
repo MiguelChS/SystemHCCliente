@@ -1,6 +1,7 @@
 import Request from '../Request/Request';
 import { changeRequest } from './LayoutAction';
 import { addModal } from './modalAction';
+import {preCargaPerson} from './FormUsuarioAction';
 
 export function insertNameLastName(valor) {
     return {
@@ -11,12 +12,6 @@ export function insertNameLastName(valor) {
 export function insertNumberDocument(valor) {
     return {
         type:"INSERT_NUM_DOCUMENTO_PERSON_FILTRO",
-        value:valor
-    }
-}
-export function insertSocio(valor) {
-    return {
-        type:"INSERT_SOCIO_PERSON_FILTRO",
         value:valor
     }
 }
@@ -48,15 +43,14 @@ export function filtrar() {
 
 export function Editar(form,component,source){
     return [
-        preCargaUnist({
+        preCargaPerson({
             id:form._id,
-            piso:form.piso,
-            unidad:form.unidad,
-            idOrientacion:source.find(obj=> obj.label == form.orientacion),
-            caracteristicas:form.caracteristicas,
-            superficieCubierta:form.superficieCubierta,
-            balconTerraza:form.Balcon_terraza,
-            terrrazaExterna:form.terraza_externa,
+            name:form.nombre,
+            lastName:form.apellido,
+            telefono:form.telefono,
+            numDocumento:form.numeroDocumento,
+            idTipoDocumento:source.find(obj=> obj.label == form.tipoDocu),
+            mail:form.mail
         }),
         addModal({
             body:component,

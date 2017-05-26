@@ -6,12 +6,12 @@ import {connect} from 'react-redux';
 import { Select, Input } from '../componentFormulario/index.jsx';
 import * as action from '../../../actions/FormUsuarioAction';
 import * as lib from '../../../lib/index';
+import { hiddenModal} from '../../../actions/modalAction';
 
 
 function sendForm(props){
-    if(!formComplete()) return;
+    if(!formComplete(props.store)) return;
     props.dispatch([
-        action.changeStateSendForm(true),
         action.sendUsuario(props.store,props.idUsuario)
     ]);
 }
@@ -23,9 +23,13 @@ let formulario = (props)=>{
     return(
         <form className="form-horizontal" onSubmit={(event)=>{
             event.preventDefault();
+            sendForm(props)
         }}>
+            <h5> Persona <small> SystemHC+</small></h5>
+            <div className="hr-line-dashed"></div>
             <div className="text-center">
                 <p className="mjsErr">{props.store.errMjs}</p>
+                <p className="mjsSuccess">{props.store.mjsSuccess}</p>
             </div>
             <Input
                 value={props.store.name}
@@ -57,7 +61,6 @@ let formulario = (props)=>{
             />
             <Input
                 value={props.store.mail}
-                required={true}
                 label="Mail"
                 placeHolder="Mail"
                 returnValue={(value)=>{
@@ -84,33 +87,25 @@ let formulario = (props)=>{
                     props.dispatch(action.insertNumberDocument(value))
                 }}
             />
-            <Input
-                value={props.store.importe}
-                required={true}
-                label="Importe"
-                placeHolder="Importe"
-                returnValue={(value)=>{
-                    if(value.length > 0 && !lib.OnlyNumber(value))return;
-                    props.dispatch(action.insertImporte(value))
-                }}
-            />
-            <Select
-                label="Tipo Moneda"
-                id="idTipoMoneda"
-                col={{label:2,input:10}}
-                dataSource={props.source.TypeMoney}
-                default={props.store.idTipoMoneda}
-                required={true}
-                returnSelect={(value)=>{
-                    props.dispatch(action.insertTypeMoney(value))
-                }}
-            />
             <div className="hr-line-dashed"></div>
             <div className="form-group">
-                <div className="col-sm-4 col-sm-offset-2">
-                    <button className="btn btn-primary"
-                            disabled={props.store.sendForm}
+                <div className="col-xs-12 text-right">
+                    <button className="btn btn-primary separarButton"
+                            disabled={props.request}
                             type="submit">Cargar</button>
+                    <button className="btn btn-primary separarButton"
+                            type="button"
+                            disabled={props.request}
+                            onClick={()=>{
+                                props.dispatch([
+                                    action.insertSUCCESS(""),
+                                    action.insertERR(""),
+                                    action.clearForm(),
+                                    hiddenModal(props.idModal)
+                                ])
+                            }}>
+                        Cerrar
+                    </button>
                 </div>
             </div>
         </form>
@@ -121,8 +116,9 @@ const mapStateToProps = (state)=>{
     return {
         store:state.FormUsuario,
         source:state.Source,
-        idUsuario:state.Layout.DataUser.id
+        idUsuario:state.Layout.DataUser.id,
+        request:state.Layout.request
     }
 };
 
-export default connect()(formulario);
+export default connect(mapStateToProps)(formulario);
