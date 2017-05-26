@@ -54,7 +54,7 @@ export default class Index extends React.Component{
                                     id="idTipoMoney"
                                     col={{label:2,input:10}}
                                     dataSource={this.props.source.TypeMoney}
-                                    default={this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"]:null}
+                                    default={this.props.store.idTipoMoneda}
                                     required={true}
                                     returnSelect={(value)=>{
                                         this.props.dispatch([
@@ -68,7 +68,7 @@ export default class Index extends React.Component{
                                     id="idAporte"
                                     col={{label:2,input:10}}
                                     dataSource={this.props.source.typeContribute}
-                                    default={this.props.store.idTipoAporte ? this.props.store.idTipoAporte["value"]:null}
+                                    default={this.props.store.idTipoAporte}
                                     required={true}
                                     returnSelect={(value)=>{
                                         this.props.dispatch(action.insertTypeAporte(value))

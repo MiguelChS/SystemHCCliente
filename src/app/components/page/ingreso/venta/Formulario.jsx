@@ -88,7 +88,7 @@ export default class Index extends React.Component{
                                             id="idTipoVenta"
                                             col={{label:2,input:10}}
                                             dataSource={this.props.source.StateSale}
-                                            default={this.props.store.TipoVenta ? this.props.store.TipoVenta["value"]:null}
+                                            default={this.props.store.TipoVenta}
                                             required={false}
                                             returnSelect={(value)=>{
                                                 this.props.dispatch([
@@ -105,7 +105,7 @@ export default class Index extends React.Component{
                                             col={{label:2,input:10}}
                                             disabled={disabledRe}
                                             dataSource={this.Reserva()}
-                                            default={this.props.store.selectUnidadReserva ? this.props.store.selectUnidadReserva["value"]:null}
+                                            default={this.props.store.selectUnidadReserva}
                                             required={false}
                                             returnSelect={(value)=>{
                                                 this.props.dispatch(action.insertUnitsReserve(value))

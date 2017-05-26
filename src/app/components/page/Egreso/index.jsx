@@ -119,7 +119,7 @@ export default class Egreso extends React.Component{
                                     id="idTipoMoneda"
                                     col={{label:2,input:10}}
                                     dataSource={this.props.source.TypeMoney}
-                                    default={this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"]:null}
+                                    default={this.props.store.idTipoMoneda}
                                     required={true}
                                     returnSelect={(value)=>{
                                         this.props.dispatch([
@@ -144,7 +144,7 @@ export default class Egreso extends React.Component{
                                     id="idTipoPago"
                                     col={{label:2,input:10}}
                                     dataSource={this.props.source.TypePayment}
-                                    default={this.props.store.idTipoPago ? this.props.store.idTipoPago["value"]:null}
+                                    default={this.props.store.idTipoPago}
                                     required={true}
                                     returnSelect={(value)=>{
                                         this.props.dispatch(action.insertTipoPago(value))

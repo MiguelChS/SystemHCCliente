@@ -14,7 +14,11 @@ export default (props)=>{
                 {props.label}
             </Col>
             <Col xs={12} sm={( typeof props.col == 'undefined' ? 10 : props.col.input)}>
-                <select className={classRequire} onChange={(event)=>{clickSelect(event,props,dataSource)}} value={searchDefault(props,dataSource)}>
+                <select className={classRequire}
+                        onChange={(event)=>{clickSelect(event,props,dataSource)}}
+                        value={searchDefault(props,dataSource)}
+                        disabled={props.hasOwnProperty("disabled") ? props.disabled : false}
+                >
                     <option value="-1">Seleccione</option>
                     {dataSource.map((obj,index)=>{
                         return <option key={index} value={index} >{obj.label}</option>

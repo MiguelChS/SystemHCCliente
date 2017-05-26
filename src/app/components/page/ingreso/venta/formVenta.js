@@ -54,7 +54,7 @@ export default (props)=>{
                         id="idTipoMoneda"
                         col={{label:2,input:10}}
                         dataSource={props.source.TypeMoney}
-                        default={props.store.tipoMonedaAdelanto ? props.store.tipoMonedaAdelanto["value"]:null}
+                        default={props.store.tipoMonedaAdelanto}
                         required={true}
                         returnSelect={(value)=>{
                             props.onTypeMoneyAde(value);
@@ -69,7 +69,7 @@ export default (props)=>{
                         id="idTipoMoneda"
                         col={{label:2,input:10}}
                         dataSource={props.source.TypePayment}
-                        default={props.store.tipoPagoAdelanto ? props.store.tipoPagoAdelanto["value"]:null}
+                        default={props.store.tipoPagoAdelanto}
                         required={true}
                         returnSelect={(value)=>{
                             props.onTypePagoAde(value);
@@ -116,7 +116,7 @@ export default (props)=>{
                                         id="idTipoMoneda"
                                         col={{label:2,input:10}}
                                         dataSource={props.source.TypeMoney}
-                                        default={props.store.idTipoMonedaCuota ? props.store.idTipoMonedaCuota["value"]:null}
+                                        default={props.store.idTipoMonedaCuota}
                                         required={true}
                                         returnSelect={(value)=>{
                                             props.onTypeMoneyCuo(value);

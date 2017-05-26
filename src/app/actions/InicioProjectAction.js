@@ -69,6 +69,7 @@ export function preCargarData(valor) {
     return {
         type:"CHANGE_PRECARGA_INICIO",
         value:{
+            idProject:valor._id,
             Fecha:moment.utc(valor.fechaInicio).format("YYYY-MM-DD"),
             costoM2:valor.costoM2,
             plazoProjecto:valor.plazo,

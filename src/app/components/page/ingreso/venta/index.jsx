@@ -5,7 +5,7 @@ import DetalleVenta from '../componentCompartido/DetalleVenta';
 import VerificarProp from '../componentCompartido/VerificarPropietario.jsx'
 import DatosProp from '../componentCompartido/DatosPropietario.jsx';
 import { connect} from 'react-redux';
-import {searchUnits,insertOwner} from '../../../../actions/FormVentaAction';
+import  * as action from '../../../../actions/FormVentaAction';
 import { insertNumberDocumentSearch,searchOwner,LoadDataOwnerLabel,clearForm } from '../../../../actions/FormPropietarioAction';
 import FormProp from './FormPropietario.jsx';
 import { addModal } from '../../../../actions/modalAction';
@@ -22,11 +22,12 @@ export default class Index extends React.Component{
     componentWillUnmount(){
         this.props.dispatch([
             LoadDataOwnerLabel(null),
-            clearForm()
+            clearForm(),
+            action.clearForm(false)
         ])
     }
     componentDidMount(){
-        this.props.dispatch(searchUnits())
+        this.props.dispatch(action.searchUnits())
     }
 
     render(){
@@ -37,7 +38,7 @@ export default class Index extends React.Component{
                         dispatch={this.props.dispatch}
                         store={this.props.FormOwner}
                         btnSearch={()=>{
-                            this.props.dispatch(searchOwner(this.props.FormOwner.numberDocumentSerach,insertOwner,2))
+                            this.props.dispatch(searchOwner(this.props.FormOwner.numberDocumentSerach,action.insertOwner,2))
                         }}
                         onChangeNumDoc={(text)=>{
                             this.props.dispatch(insertNumberDocumentSearch(text));

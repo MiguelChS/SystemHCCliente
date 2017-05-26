@@ -75,7 +75,7 @@ export default class FormProp extends React.Component{
                     id="TipoDocumento"
                     col={{label:2,input:10}}
                     dataSource={this.props.source.typeDocument}
-                    default={this.props.store.idTipoDocumento ? this.props.store.idTipoDocumento["value"]:null}
+                    default={this.props.store.idTipoDocumento}
                     required={true}
                     returnSelect={(value)=>{
                         this.props.dispatch(action.insertTypeDocument(value))

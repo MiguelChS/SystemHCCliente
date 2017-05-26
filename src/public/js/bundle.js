@@ -44513,9 +44513,13 @@
 	            { xs: 12, sm: typeof props.col == 'undefined' ? 10 : props.col.input },
 	            _react2.default.createElement(
 	                'select',
-	                { className: classRequire, onChange: function onChange(event) {
+	                { className: classRequire,
+	                    onChange: function onChange(event) {
 	                        clickSelect(event, props, dataSource);
-	                    }, value: searchDefault(props, dataSource) },
+	                    },
+	                    value: searchDefault(props, dataSource),
+	                    disabled: props.hasOwnProperty("disabled") ? props.disabled : false
+	                },
 	                _react2.default.createElement(
 	                    'option',
 	                    { value: '-1' },
@@ -66630,6 +66634,8 @@
 	
 	var _FormVentaAction = __webpack_require__(691);
 	
+	var action = _interopRequireWildcard(_FormVentaAction);
+	
 	var _FormPropietarioAction = __webpack_require__(693);
 	
 	var _FormPropietario = __webpack_require__(700);
@@ -66637,6 +66643,8 @@
 	var _FormPropietario2 = _interopRequireDefault(_FormPropietario);
 	
 	var _modalAction = __webpack_require__(394);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -66665,12 +66673,12 @@
 	    _createClass(Index, [{
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
-	            this.props.dispatch([(0, _FormPropietarioAction.LoadDataOwnerLabel)(null), (0, _FormPropietarioAction.clearForm)()]);
+	            this.props.dispatch([(0, _FormPropietarioAction.LoadDataOwnerLabel)(null), (0, _FormPropietarioAction.clearForm)(), action.clearForm(false)]);
 	        }
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            this.props.dispatch((0, _FormVentaAction.searchUnits)());
+	            this.props.dispatch(action.searchUnits());
 	        }
 	    }, {
 	        key: 'render',
@@ -66687,7 +66695,7 @@
 	                        dispatch: this.props.dispatch,
 	                        store: this.props.FormOwner,
 	                        btnSearch: function btnSearch() {
-	                            _this2.props.dispatch((0, _FormPropietarioAction.searchOwner)(_this2.props.FormOwner.numberDocumentSerach, _FormVentaAction.insertOwner, 2));
+	                            _this2.props.dispatch((0, _FormPropietarioAction.searchOwner)(_this2.props.FormOwner.numberDocumentSerach, action.insertOwner, 2));
 	                        },
 	                        onChangeNumDoc: function onChangeNumDoc(text) {
 	                            _this2.props.dispatch((0, _FormPropietarioAction.insertNumberDocumentSearch)(text));
@@ -66871,7 +66879,7 @@
 	                                        id: 'idTipoVenta',
 	                                        col: { label: 2, input: 10 },
 	                                        dataSource: this.props.source.StateSale,
-	                                        'default': this.props.store.TipoVenta ? this.props.store.TipoVenta["value"] : null,
+	                                        'default': this.props.store.TipoVenta,
 	                                        required: false,
 	                                        returnSelect: function returnSelect(value) {
 	                                            _this2.props.dispatch([action.clearForm(true), action.insertTypeVenta(value)]);
@@ -66887,7 +66895,7 @@
 	                                        col: { label: 2, input: 10 },
 	                                        disabled: disabledRe,
 	                                        dataSource: this.Reserva(),
-	                                        'default': this.props.store.selectUnidadReserva ? this.props.store.selectUnidadReserva["value"] : null,
+	                                        'default': this.props.store.selectUnidadReserva,
 	                                        required: false,
 	                                        returnSelect: function returnSelect(value) {
 	                                            _this2.props.dispatch(action.insertUnitsReserve(value));
@@ -67516,7 +67524,7 @@
 	                    id: 'idTipoMoneda',
 	                    col: { label: 2, input: 10 },
 	                    dataSource: props.source.TypeMoney,
-	                    'default': props.store.tipoMonedaAdelanto ? props.store.tipoMonedaAdelanto["value"] : null,
+	                    'default': props.store.tipoMonedaAdelanto,
 	                    required: true,
 	                    returnSelect: function returnSelect(value) {
 	                        props.onTypeMoneyAde(value);
@@ -67535,7 +67543,7 @@
 	                    id: 'idTipoMoneda',
 	                    col: { label: 2, input: 10 },
 	                    dataSource: props.source.TypePayment,
-	                    'default': props.store.tipoPagoAdelanto ? props.store.tipoPagoAdelanto["value"] : null,
+	                    'default': props.store.tipoPagoAdelanto,
 	                    required: true,
 	                    returnSelect: function returnSelect(value) {
 	                        props.onTypePagoAde(value);
@@ -67592,7 +67600,7 @@
 	                                id: 'idTipoMoneda',
 	                                col: { label: 2, input: 10 },
 	                                dataSource: props.source.TypeMoney,
-	                                'default': props.store.idTipoMonedaCuota ? props.store.idTipoMonedaCuota["value"] : null,
+	                                'default': props.store.idTipoMonedaCuota,
 	                                required: true,
 	                                returnSelect: function returnSelect(value) {
 	                                    props.onTypeMoneyCuo(value);
@@ -68361,7 +68369,7 @@
 	                    id: 'TipoDocumento',
 	                    col: { label: 2, input: 10 },
 	                    dataSource: this.props.source.typeDocument,
-	                    'default': this.props.store.idTipoDocumento ? this.props.store.idTipoDocumento["value"] : null,
+	                    'default': this.props.store.idTipoDocumento,
 	                    required: true,
 	                    returnSelect: function returnSelect(value) {
 	                        _this2.props.dispatch(action.insertTypeDocument(value));
@@ -68644,7 +68652,7 @@
 	                                    id: 'idTipoMoney',
 	                                    col: { label: 2, input: 10 },
 	                                    dataSource: this.props.source.TypeMoney,
-	                                    'default': this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"] : null,
+	                                    'default': this.props.store.idTipoMoneda,
 	                                    required: true,
 	                                    returnSelect: function returnSelect(value) {
 	                                        _this2.props.dispatch([action.insertTypeMoney(value), action.insertCambio("")]);
@@ -68655,7 +68663,7 @@
 	                                    id: 'idAporte',
 	                                    col: { label: 2, input: 10 },
 	                                    dataSource: this.props.source.typeContribute,
-	                                    'default': this.props.store.idTipoAporte ? this.props.store.idTipoAporte["value"] : null,
+	                                    'default': this.props.store.idTipoAporte,
 	                                    required: true,
 	                                    returnSelect: function returnSelect(value) {
 	                                        _this2.props.dispatch(action.insertTypeAporte(value));
@@ -68995,7 +69003,7 @@
 	                                    id: 'idTipoMoneda',
 	                                    col: { label: 2, input: 10 },
 	                                    dataSource: this.props.source.TypeMoney,
-	                                    'default': this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"] : null,
+	                                    'default': this.props.store.idTipoMoneda,
 	                                    required: true,
 	                                    returnSelect: function returnSelect(value) {
 	                                        _this3.props.dispatch([action.insertTipoMoneda(value), action.insertCambioDolar("")]);
@@ -69017,7 +69025,7 @@
 	                                    id: 'idTipoPago',
 	                                    col: { label: 2, input: 10 },
 	                                    dataSource: this.props.source.TypePayment,
-	                                    'default': this.props.store.idTipoPago ? this.props.store.idTipoPago["value"] : null,
+	                                    'default': this.props.store.idTipoPago,
 	                                    required: true,
 	                                    returnSelect: function returnSelect(value) {
 	                                        _this3.props.dispatch(action.insertTipoPago(value));
@@ -69440,7 +69448,7 @@
 	                                id: 'idTipoMoney',
 	                                col: { label: 2, input: 10 },
 	                                dataSource: this.Unidades(),
-	                                'default': this.props.store.idVenta ? this.props.store.idVenta["value"] : null,
+	                                'default': this.props.store.idVenta,
 	                                required: true,
 	                                returnSelect: function returnSelect(value) {
 	                                    _this2.props.dispatch(action.insertVenta(value));
@@ -69451,7 +69459,7 @@
 	                                id: 'idTipoMoney',
 	                                col: { label: 2, input: 10 },
 	                                dataSource: this.props.source.TypeMoney,
-	                                'default': this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"] : null,
+	                                'default': this.props.store.idTipoMoneda,
 	                                required: true,
 	                                returnSelect: function returnSelect(value) {
 	                                    _this2.props.dispatch([action.insertMoney(value), action.insertCambioDolar("")]);
@@ -69462,7 +69470,7 @@
 	                                id: 'idAporte',
 	                                col: { label: 2, input: 10 },
 	                                dataSource: this.props.source.TypePayment,
-	                                'default': this.props.store.idFormaPago ? this.props.store.idFormaPago["value"] : null,
+	                                'default': this.props.store.idFormaPago,
 	                                required: true,
 	                                returnSelect: function returnSelect(value) {
 	                                    _this2.props.dispatch(action.insertForma(value));
@@ -70512,6 +70520,7 @@
 	    return {
 	        type: "CHANGE_PRECARGA_INICIO",
 	        value: {
+	            idProject: valor._id,
 	            Fecha: _moment2.default.utc(valor.fechaInicio).format("YYYY-MM-DD"),
 	            costoM2: valor.costoM2,
 	            plazoProjecto: valor.plazo,

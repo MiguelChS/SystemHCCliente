@@ -67,7 +67,7 @@ export default class Formulario extends React.Component{
                                     id="idTipoMoney"
                                     col={{label:2,input:10}}
                                     dataSource={this.Unidades()}
-                                    default={this.props.store.idVenta ? this.props.store.idVenta["value"]:null}
+                                    default={this.props.store.idVenta}
                                     required={true}
                                     returnSelect={(value)=>{
                                         this.props.dispatch(action.insertVenta(value))
@@ -78,7 +78,7 @@ export default class Formulario extends React.Component{
                                     id="idTipoMoney"
                                     col={{label:2,input:10}}
                                     dataSource={this.props.source.TypeMoney}
-                                    default={this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"]:null}
+                                    default={this.props.store.idTipoMoneda}
                                     required={true}
                                     returnSelect={(value)=>{
                                         this.props.dispatch([
@@ -92,7 +92,7 @@ export default class Formulario extends React.Component{
                                     id="idAporte"
                                     col={{label:2,input:10}}
                                     dataSource={this.props.source.TypePayment}
-                                    default={this.props.store.idFormaPago ? this.props.store.idFormaPago["value"]:null}
+                                    default={this.props.store.idFormaPago}
                                     required={true}
                                     returnSelect={(value)=>{
                                         this.props.dispatch(action.insertForma(value))
