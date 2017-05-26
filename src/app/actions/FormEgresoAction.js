@@ -61,6 +61,12 @@ export function changeStateSendForm(valor) {
         value:valor
     }
 }
+export function insertCambioDolar(valor) {
+    return {
+        type:"INSERT_CAMBIO_DOLAR_EGRESO",
+        value:valor
+    }
+}
 export function clearForm() {
     return {
         type:"CLEAR_FORM_EGRESO",
@@ -72,6 +78,7 @@ export function sendForm(form,idUsuario) {
         idTipoCosto:form.idTipoCosto.value,
         idTipoMoneda:form.idTipoMoneda.value,
         idTipoPago:form.idTipoPago.value,
+        cambioDolar:form.cambioDolar,
         importe:form.importe,
         idUsuario:idUsuario
     };

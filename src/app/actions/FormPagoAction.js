@@ -58,6 +58,12 @@ export function changeStateSendForm(valor) {
         value:valor
     }
 }
+export function insertCambioDolar(valor) {
+    return {
+        type:"INSERT_CAMBIO_MONEDA_PAGO",
+        value:valor
+    }
+}
 export function sendForm(form,idUsuario) {
     return function(dispatch) {
         Request.post('http://localhost:3001/api/newPago',

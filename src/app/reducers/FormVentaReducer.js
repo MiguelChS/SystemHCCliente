@@ -13,6 +13,7 @@ let init = {
     importeAdelanto:null,
     tipoMonedaAdelanto:null,
     tipoPagoAdelanto:null,
+    cambioDolar:null,
     //cuatoas
     cantidadPago:null,
     idTipoMonedaCuota:null,
@@ -46,6 +47,9 @@ function reducer(state=init,action) {
         }
         case "INSERT_CONDITION_PAYMENT_SALES":{
             return{...state,idCondicionPago:action.value}
+        }
+        case "INSERT_CAMBIO_DOLAR_SALES":{
+            return{...state,cambioDolar:action.value}
         }
         case "INSERT_COUNT_PAYMENT_SALES":{
             return{...state,cantidadPago:action.value}

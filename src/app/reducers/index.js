@@ -18,6 +18,10 @@ import formAporte from './FormAporteReducer';
 import formEgreso from './FormEgresoReducer';
 import formPago from './FormPagoReducer';
 import caja from './CajaReducer';
+import StartProject from './InicioProjectoReducer';
+import cashFlow from './cashFlowReducer';
+import FiltroUnidad from './FiltrosUnidadReducer';
+import FiltroPerson from './FiltroPersonaReducer';
 
 export default combineReducers({
     Login:login,
@@ -34,5 +38,9 @@ export default combineReducers({
     FormAporte:formAporte,
     FormEgreso:formEgreso,
     FormPago:formPago,
-    Caja:caja
+    Caja:caja,
+    cashFlow:cashFlow,
+    startProject:StartProject,
+    filtroUnidad:FiltroUnidad,
+    filtroPerson:FiltroPerson
 })

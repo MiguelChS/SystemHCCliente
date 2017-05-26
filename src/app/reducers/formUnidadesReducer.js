@@ -5,6 +5,7 @@
  * Created by mc185249 on 4/23/2017.
  */
 let init = {
+    id:null,
     piso:null,
     unidad:null,
     idOrientacion:null,
@@ -12,8 +13,9 @@ let init = {
     superficieCubierta:null,
     balconTerraza:null,
     terrrazaExterna:null,
-    sendForm:false,
-    errMjs:""
+    errMjs:"",
+    MjsSuccess:""
+
 };
 
 function reducer(state=init,action) {
@@ -42,11 +44,14 @@ function reducer(state=init,action) {
         case "CLEAR_FORM_UNITS":{
             return{...state,...init}
         }
+        case "PRE_CARGAR_UNITS":{
+            return{...state,...action.value}
+        }
         case "INSERT_ERR_MJS_UNITS":{
             return{...state,errMjs:action.value}
         }
-        case "CHANGE_STATE_SEND_UNITS":{
-            return{...state,sendForm:action.value}
+        case "INSERT_SUCCESS_MJS_UNITS":{
+            return{...state,MjsSuccess:action.value}
         }
         default:{
             return{...state}

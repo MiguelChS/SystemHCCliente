@@ -81,7 +81,10 @@ export default class Formulario extends React.Component{
                                     default={this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"]:null}
                                     required={true}
                                     returnSelect={(value)=>{
-                                        this.props.dispatch(action.insertMoney(value))
+                                        this.props.dispatch([
+                                            action.insertMoney(value),
+                                            action.insertCambioDolar("")
+                                        ])
                                     }}
                                 />
                                 <Select

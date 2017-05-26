@@ -130,7 +130,9 @@ export default class Index extends React.Component{
                                             this.props.dispatch(action.insertCostoAdelanto(importe))
                                         }}
                                         onTypeMoneyAde={(money)=>{
-                                            this.props.dispatch(action.insertTipoMonedaAdelanto(money))
+                                            this.props.dispatch([
+                                                action.insertTipoMonedaAdelanto(money),
+                                                action.insertCambioDolar("")])
                                         }}
                                         onTypePagoAde={(TypeAde)=>{
                                             this.props.dispatch(action.insertTypePaymentAde(TypeAde));

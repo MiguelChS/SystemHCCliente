@@ -1,7 +1,9 @@
 let init={
     showMenuLeft:true,
     DataUser:null,
-    bodyContent:null
+    bodyContent:null,
+    cambioDefault:15,
+    request:false,
 };
 
 function reducer(state=init,action) {
@@ -14,6 +16,12 @@ function reducer(state=init,action) {
         }
         case "LOAD_BODY_CONTENT_LAYOUT":{
             return {...state,bodyContent:action.value}
+        }
+        case "LOAD_CAMBIO_DEFAULT_LAYOUT":{
+            return {...state,cambioDefault:action.value}
+        }
+        case "LOAD_CHANGE_REQUEST_LAYOUT":{
+            return {...state,request:action.value}
         }
         default:{
             return state;

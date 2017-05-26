@@ -2,73 +2,76 @@
  * Created by mc185249 on 5/7/2017.
  */
 import React from 'react';
-
+import { connect } from 'react-redux'
+import * as action from '../../../actions/cashFlowAction';
+@connect((state)=>{
+    return {
+        store:state.cashFlow,
+        cambioDolar:state.Layout.cambioDefault
+    }
+})
 export default class index extends React.Component{
     componentDidMount(){
-        var data = google.visualization.arrayToDataTable([
-            ['Month', 'Capital', 'ingreso', 'egreso', 'flujo de Fondo'],
-            ['01-17',-5000000,305555.555555556,-138888.888888889,-4833333.33333333],
-            ['02-17',0,305555.555555556,-138888.888888889,-4666666.66666667],
-            ['03-17',0,305555.555555556,-138888.888888889,-4500000],
-            ['04-17',0,305555.555555556,-138888.888888889,-4333333.33333333],
-            ['05-17',0,305555.555555556,-138888.888888889,-4166666.66666667],
-            ['06-17',0,305555.555555556,-138888.888888889,-4000000],
-            ['07-17',0,305555.555555556,-138888.888888889,-3833333.33333333],
-            ['08-17',0,305555.555555556,-138888.888888889,-3666666.66666667],
-            ['09-17',0,305555.555555556,-138888.888888889,-3500000],
-            ['10-17',0,305555.555555556,-138888.888888889,-3333333.33333333],
-            ['11-17',0,305555.555555556,-138888.888888889,-3166666.66666667],
-            ['12-17',0,305555.555555556,-138888.888888889,-3000000],
-            ['01-18',0,305555.555555556,-138888.888888889,-2833333.33333333],
-            ['02-18',-400000,305555.555555556,-138888.888888889,-3066666.66666667],
-            ['03-18',0,305555.555555556,-138888.888888889,-2900000],
-            ['04-18',0,305555.555555556,-138888.888888889,-2733333.33333333],
-            ['05-18',0,305555.555555556,-138888.888888889,-2566666.66666667],
-            ['06-18',0,305555.555555556,-138888.888888889,-2400000],
-            ['07-18',0,305555.555555556,-138888.888888889,-2233333.33333333],
-            ['08-18',0,305555.555555556,-138888.888888889,-2066666.66666667],
-            ['09-18',0,305555.555555556,-138888.888888889,-1900000],
-            ['10-18',0,305555.555555556,-138888.888888889,-1733333.33333333],
-            ['11-18',0,305555.555555556,-138888.888888889,-1566666.66666667],
-            ['12-18',0,305555.555555556,-138888.888888889,-1400000],
-            ['01-19',0,305555.555555556,-138888.888888889,-1233333.33333334],
-            ['02-19',0,305555.555555556,-138888.888888889,-1066666.66666667],
-            ['03-19',0,305555.555555556,-138888.888888889,-900000.000000002],
-            ['04-19',0,305555.555555556,-138888.888888889,-733333.333333336],
-            ['05-19',0,305555.555555556,-138888.888888889,-566666.666666669],
-            ['06-19',0,305555.555555556,-138888.888888889,-400000.000000003],
-            ['07-19',0,305555.555555556,-138888.888888889,-233333.333333336],
-            ['08-19',0,305555.555555556,-138888.888888889,-66666.6666666696],
-            ['09-19',0,305555.555555556,-138888.888888889,99999.999999997],
-            ['10-19',0,305555.555555556,-138888.888888889,266666.666666664],
-            ['11-19',0,305555.555555556,-138888.888888889,433333.33333333],
-            ['12-19',0,305555.555555556,-138888.888888889,599999.999999997],
-        ]);
-
-        var options = {
-            title : 'Evolución de cashFlow',
-            vAxis: {title: '$'},
-            hAxis: {title: 'Month'},
-            seriesType: 'bars',
-            series: {3: {type: 'line'}}
-        };
-
         var chart = new google.visualization.ComboChart(document.getElementById('ChartChasFlow'));
-        chart.draw(data, options);
+        this.props.dispatch(action.buscarData(chart,this.props.cambioDolar))
     }
+
     render(){
         return(
-            <div className="row">
-                <div className="col-lg-12">
-                    <div className="ibox float-e-margins">
-                        <div className="ibox-content">
-                            <div>
-                                <h3 className="font-bold no-margins">
-                                    Periodo de repago 09-19
-                                </h3>
+            <div>
+                <div className="row">
+                    <div className="col-sm-4">
+                        <div className="ibox float-e-margins">
+                            <div className="ibox-title">
+                                <span className="label resultColor pull-right"/>
+                                <span className="label resultColor pull-right">a la fecha</span>
+                                <h5>Periodo de repago </h5>
                             </div>
-
-                            <div id="ChartChasFlow" style={{height:"500px"}}>
+                            <div className="ibox-content">
+                                <h1 className="no-margins">{this.props.store.periodoR}</h1>
+                                <div className="stat-percent font-bold text-success">
+                                    <i className="fa fa-clock-o"/>
+                                </div>
+                                <small>periodo en el cual vas a empezar a recuperar la inversion</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="ibox float-e-margins">
+                            <div className="ibox-title">
+                                <h5>CashFlow<small> SystemHC+ </small></h5>
+                                <div className="ibox-tools inputGp">
+                                    <div>
+                                        <div className="input-group">
+                                            <input type="text"
+                                                   value={this.props.store.Moneda}
+                                                   placeholder="Cambio"
+                                                   onChange={(event)=>{
+                                                       this.props.dispatch(action.insertMoney(event.target.value))
+                                                   }}
+                                                   className="input-sm form-control"/>
+                                            <span className="input-group-btn">
+                                                <button type="button"
+                                                        onClick={()=>{
+                                                            this.props.dispatch(action.updateDataGraphic(
+                                                             this.props.store.chart,
+                                                             this.props.store.dataCruda,
+                                                             this.props.store.Moneda
+                                                             ))
+                                                        }}
+                                                        className="btn btn-sm btn-primary">
+                                                    <i className="fa fa-refresh"/>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="ibox-content">
+                                <div id="ChartChasFlow" style={{height:"400px"}}>
+                                </div>
                             </div>
                         </div>
                     </div>

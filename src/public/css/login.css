@@ -115,6 +115,9 @@ h3 {
 .mjsErr{
     color: #ed5565;
 }
+.mjsSuccess{
+    color: #1dc5a3;
+}
 .form-control:focus {
     border-color: #1ab394;
     outline: 0;

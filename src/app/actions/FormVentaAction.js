@@ -97,6 +97,12 @@ export function insertTypeVenta(valor) {
         value:valor
     }
 }
+export function insertCambioDolar(valor) {
+    return{
+        type:"INSERT_CAMBIO_DOLAR_SALES",
+        value:valor
+    }
+}
 export function insertUnitsReserve(valor) {
     return[
         loadAuto({id:"idUnidad",state:{}}),
@@ -120,7 +126,7 @@ export function sendForm(form,idUsuario,idForm) {
                 idTipoMonedaCuota: form.idTipoMonedaCuota ? form.idTipoMonedaCuota.value : null,
                 importeCuota:form.importeCuota,
                 TipoVenta:form.TipoVenta.value,
-                Reserva:form.selectUnidadReserva.value,
+                Reserva:form.selectUnidadReserva ? form.selectUnidadReserva.value :  null,
                 idUsuario:idUsuario
             })
             .then((result)=>{

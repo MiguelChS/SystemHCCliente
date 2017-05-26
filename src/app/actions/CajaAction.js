@@ -16,51 +16,62 @@ export function insertChart(valor) {
         value: valor
     }
 }
+export function insertMoney(valor) {
+    return {
+        type:"INSERT_MONEY_CAJA",
+        value: valor
+    }
+}
+export function insertDataCruda(valor) {
+    return {
+        type:"LOAD_DATA_CRUDA_CAJA",
+        value: valor
+    }
+}
 export function insertTabla(valor) {
     return {
         type:"LOAD_TABLA_CAJA",
-        value: valor.map((obj,index)=> {
-            if(index == 0){
-                if(obj.ingreso == "1"){
-                    obj["result"] = obj.importe;
-                }else{
-                    obj["result"] = obj.importe * -1;
-                }
-            }else{
-                if(obj.ingreso == "1"){
-                    obj["result"] = valor[index-1].result + obj.importe;
-                }else{
-                    obj["result"] = valor[index-1].result - obj.importe;
-                }
-            }
-            return obj;
-        })
+        value:{
+            tabla:valor
+        }
     }
 }
-
-export function DrawChart() {
-    
+export function updateDataGraphic(chart,data,money) {
+    let newData = GenerarDataTable(data,money);
+    DrawChart(newData,chart);
+    return insertData(data)
 }
 
-export function searchData(chart) {
-    /*let data = new google.visualization.DataTable();
-    data.addColumn('date', 'Fecha');
-    data.addColumn('number', 'Ingreso');
-    data.addColumn('number', 'Egreso');
-    //data.addRows(dataTable);*/
+export function DrawChart(data,chart) {
     var options = {
+        title: '',
+        colors: ['#1ab394', '#ed5565'],
+        bar: {groupWidth: "50%"},
+        hAxis: {
+            title: '',
+            format:"MMM-yy",
+            ticks:data.ticks
+        },
+        vAxis: {
+            title: ''
+        }
     };
+    chart.draw(data.data,options);
+}
 
-    //chart.draw(data, options)
+export function searchData(chart,money) {
     return function(dispatch) {
         request.get('http://localhost:3001/api/Caja')
             .then((result)=>{
-                var data = google.visualization.arrayToDataTable(GenerarDataTable(result.data.Graphic));
-                chart.draw(data, options);
+                let data = GenerarDataTable(result.data.Graphic,money);
+                DrawChart(data,chart);
                 dispatch([
+                    insertMoney(money),
+                    insertDataCruda(result.data.Graphic),
+                    insertData(data),
                     insertChart(chart),
                     insertTabla(result.data.tabla)
-                ])
+                ]);
             })
             .catch((err)=>{
 
@@ -68,20 +79,58 @@ export function searchData(chart) {
     }
 }
 
-function GenerarDataTable(list) {
-    let dataTable = [['Year', 'Ingreso', 'Egreso']];
-    for (var i = 0; i < list.length; i++) {
-        var row = [];
-        row.push(moment.utc(list[i]["fecha"]).format("YYYY-MM-DD"));
-        row.push(list[i]["ingreso"]);
-        row.push(list[i]["egreso"] * -1);
-        dataTable.push(row);
+function GenerarDataTable(list,cambioDolar) {
+    try {
+        var data = new window.google.visualization.DataTable();
+        data.addColumn('date', 'Mes');
+        data.addColumn('number', 'Ingreso');
+        data.addColumn({ type: 'string', role: 'style'});
+        data.addColumn('number', 'Egreso');
+        data.addColumn({ type: 'string', role: 'style'});
+        let dataTable = [];
+        for (var i = 0; i < list.length; i++) {
+            var row = [];
+            let ingreso = 0;
+            if(Array.isArray(list[i]["ingreso"])){
+                list[i]["ingreso"].map((obj)=>{
+                    ingreso = obj.Moneda == "58fecf3f3b2ef968436b332c" ? ingreso + (obj.total * cambioDolar) : ingreso + obj.total;
+                });
+            }
+            row.push(moment(list[i]["fecha"]).toDate());
+            row.push(ingreso);
+            row.push("opacity: 0.8");
+            row.push(list[i]["egreso"] * -1);
+            row.push("opacity: 0.8");
+            dataTable.push(row);
+        }
+        //ferificamos si son  1 2 3 en caso contrario null,
+        let ticks;
+        switch (list.length){
+            case 1:{
+                ticks = [moment(list[0]["fecha"]).toDate()];
+                break;
+            }
+            case 2:{
+                ticks = [moment(list[0]["fecha"]).toDate(),moment(list[1]["fecha"]).toDate()];
+                break;
+            }
+            case 3:{
+                ticks = [moment(list[0]["fecha"]).toDate(),
+                    moment(list[1]["fecha"]).toDate(),
+                    moment(list[2]["fecha"]).toDate()];
+                break;
+            }
+            default:
+                ticks = null;
+        }
+
+        data.addRows(dataTable);
+        return {
+            data:data,
+            ticks:ticks
+        };
+
+    }catch (err){
+        console.log(err);
     }
-    return [
-        ['fecha', 'ingreso', 'Egreso'],
-        ['10-25-2017', 1000, -400],
-        ['10-25-2017', 1170, -460],
-        ['10-25-2017', 660, -1120],
-        ['10-25-2017', 1030, -540]
-    ];
 }

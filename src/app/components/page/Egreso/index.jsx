@@ -22,25 +22,34 @@ export default class Egreso extends React.Component{
     addTypeCosto(props){
         return(
             {
-                key:props.key,
+                keyChildren:props.keyChildren,
+                keyParent:props.keyParent,
                 body:(
                     <AutoComplete
-                        key={props.key}
+                        key={props.keyChildren}
                         label=""
-                        id={props.key}
+                        id={props.keyChildren}
                         dataSource={props.source}
                         required={true}
                         resultadoAutoComplete={(value)=>{
-                            if(!value) return;
+                            //si es null removemos los hijos que halla generado
+                            if(!value){
+                                this.props.dispatch(action.removeAutoCom(props.keyChildren));
+                                return
+                            }
+                            //buscamos si el que seleccion tiene hijos
                             let source = this.props.source.TypeCostChildren.find(obj => obj.value == value.value);
+                            //si no tiene hijo lo insertamso como el tipo de costo
                             if(!source){
                                 this.props.dispatch(action.insertTipoCosto(value));
                                 return;
-                            };
+                            }
+                            //en caso contrario agregamos un nuevo autoComplete para los hijos encontrados
                             this.props.dispatch(action.insertAuto(
                                 this.addTypeCosto({
-                                    key:value.value,
-                                    source:source.costoChildren
+                                    keyChildren:value.value,
+                                    source:source.costoChildren,
+                                    keyParent:props.keyChildren
                                 })
                             ));
                         }}
@@ -67,6 +76,10 @@ export default class Egreso extends React.Component{
     }
 
     render(){
+        let disabledCambio = true;
+        if(this.props.store.idTipoMoneda && this.props.store.idTipoMoneda["value"] == "58fecf3f3b2ef968436b332c"){
+            disabledCambio = false;
+        }
         return(
             <div className="row">
                 <div className="col-xs-12">
@@ -109,7 +122,21 @@ export default class Egreso extends React.Component{
                                     default={this.props.store.idTipoMoneda ? this.props.store.idTipoMoneda["value"]:null}
                                     required={true}
                                     returnSelect={(value)=>{
-                                        this.props.dispatch(action.insertTipoMoneda(value))
+                                        this.props.dispatch([
+                                            action.insertTipoMoneda(value),
+                                            action.insertCambioDolar("")
+                                        ])
+                                    }}
+                                />
+                                <Input
+                                    label="Cambio dolar"
+                                    placeHolder="Cambio dolar"
+                                    value={this.props.store.cambioDolar}
+                                    disabled={disabledCambio}
+                                    required={true}
+                                    returnValue={(value)=>{
+                                        //if(value.length > 0 && !lib.OnlyNumber(value))return;
+                                        this.props.dispatch(action.insertCambioDolar(value))
                                     }}
                                 />
                                 <Select
@@ -133,10 +160,18 @@ export default class Egreso extends React.Component{
                                                       this.props.dispatch(action.removeAllAutoCom());
                                                       return
                                                   }
-                                                  this.props.dispatch(action.insertAuto(this.addTypeCosto({
-                                                      key:value.value,
-                                                      source:value.costoChildren
-                                                  })))
+                                                  if(!value.costoChildren){
+                                                      this.props.dispatch(action.insertTipoCosto(value));
+                                                      return;
+                                                  }
+                                                  //en caso contrario agregamos un nuevo autoComplete para los hijos encontrados
+                                                  this.props.dispatch(action.insertAuto(
+                                                      this.addTypeCosto({
+                                                          keyChildren:value.value,
+                                                          source:value.costoChildren,
+                                                          keyParent:null
+                                                      })
+                                                  ));
                                               }}
                                 />
                                 {this.props.store.autoCategoria.map((autoCom)=>{

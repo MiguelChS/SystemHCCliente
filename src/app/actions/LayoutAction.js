@@ -18,3 +18,10 @@ export function loadBodyContent(valor) {
         value:valor
     }
 }
+
+export function changeRequest(valor) {
+    return {
+        type:"LOAD_CHANGE_REQUEST_LAYOUT",
+        value:valor
+    }
+}

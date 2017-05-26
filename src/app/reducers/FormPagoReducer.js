@@ -10,6 +10,7 @@ let init = {
     importe:null,
     idVenta:null,
     sendForm:false,
+    cambioDolar:null,
     errMjs:"",
 };
 
@@ -32,6 +33,9 @@ function reducer(state=init,action) {
         }
         case "INSERT_VENTA_PAGO":{
             return{...state,idVenta:action.value}
+        }
+        case "INSERT_CAMBIO_MONEDA_PAGO":{
+            return{...state,cambioDolar:action.value}
         }
         case "CLEAR_FORM_PAGO":{
             return{...state,...init}
